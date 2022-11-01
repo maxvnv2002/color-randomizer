@@ -1,4 +1,3 @@
-
 // -----------------------------------=- Title -=-------------------------------------
 const title = document.querySelector('.header__title'),
     strTitle = 'Color Randomizer',
@@ -11,19 +10,21 @@ const title = document.querySelector('.header__title'),
         '#5A5A95'
     ]
 
-function createBackgroundLayers() {
-    let fontSize = 60
-    for (let i = 1; i < colorsArr.length; i++) {
-        fontSize = fontSize - 2
-        let fontSizeStyle = `font-size:${fontSize}px`
-        title.innerHTML += `
-            <div class="header__layer header__layer_back" style="${fontSizeStyle}; color: ${colorsArr[i]}; z-index: -${i}">
+function createOneBackgroundLayer(fontSize, colorsArr, i) {
+    return `
+            <div class="header__layer header__layer_back" style="font-size:${fontSize}px; color: ${colorsArr[i]}; z-index: -${i}">
                 Color Randomizer
             </div>
         `
+}
+
+function createBackgroundLayers(colorsArr, fontSize) {
+    for (let i = 1; i < colorsArr.length; i++) {
+        fontSize = fontSize - 2
+        title.innerHTML += createOneBackgroundLayer(fontSize, colorsArr, i)
     }
 }
-createBackgroundLayers()
+createBackgroundLayers(colorsArr, 60)
 
 document.addEventListener('mousemove', (e) => {
     const backLayers = document.querySelectorAll('.header__layer_back')
@@ -45,11 +46,14 @@ document.addEventListener('mousemove', (e) => {
 function calcVert (percent) {
     if (percent < 20) {
         return -7
-    } else if (percent >= 20 && percent < 40) {
+    }
+    if (percent >= 20 && percent < 40) {
         return -5
-    } else if (percent >= 40 && percent < 60) {
+    }
+    if (percent >= 40 && percent < 60) {
         return 0
-    } else if (percent >= 60 && percent < 80) {
+    }
+    if (percent >= 60 && percent < 80) {
         return 3
     } else {
         return 5
@@ -57,9 +61,11 @@ function calcVert (percent) {
 }
 
 function calcHoriz (percent) {
+
     if (percent < 34) {
         return 1
-    } else if (percent >= 34 && percent < 66) {
+    }
+    if (percent >= 34 && percent < 66) {
         return 0
     } else {
         return -1
